@@ -1,0 +1,6 @@
+@Carlile_Cookie_Competition_HostAddress = http://localhost:5183
+
+GET {{Carlile_Cookie_Competition_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
