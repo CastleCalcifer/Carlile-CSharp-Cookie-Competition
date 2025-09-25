@@ -26,7 +26,8 @@ namespace Carlile_Cookie_Competition
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            
+            app.UseStaticFiles();
 
             app.MapControllers();
 
