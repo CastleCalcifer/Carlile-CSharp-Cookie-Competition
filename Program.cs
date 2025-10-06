@@ -1,4 +1,6 @@
 
+using Carlile_Cookie_Competition.Data;
+
 namespace Carlile_Cookie_Competition
 {
     public class Program
@@ -30,6 +32,14 @@ namespace Carlile_Cookie_Competition
             app.UseStaticFiles();
 
             app.MapControllers();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                db.Database.Migrate();
+                db.EnsureSeed();
+            }
+
 
             app.Run();
         }
