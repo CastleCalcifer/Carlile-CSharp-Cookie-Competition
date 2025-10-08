@@ -7,15 +7,13 @@ namespace Carlile_Cookie_Competition.Data
     {
         public static void EnsureSeed(AppDbContext db)
         {
-            // If there are already cookies for 2024, skip
-            if (db.Cookies.Any(c => c.Year == 2024))
-                return;
+            if (db.Cookies.Any(c => c.Year == 2024)) return;
 
             db.Cookies.AddRange(
-                new Cookie { Year = 2024, CookieName = "Chocolate Chip", ImageUrl = "/images/chocchip.jpg", Score = 0 },
-                new Cookie { Year = 2024, CookieName = "Oatmeal Raisin", ImageUrl = "/images/oatmeal.jpg", Score = 0 },
-                new Cookie { Year = 2024, CookieName = "Peanut Butter", ImageUrl = "/images/peanut.jpg", Score = 0 },
-                new Cookie { Year = 2024, CookieName = "Snickerdoodle", ImageUrl = "/images/snickerdoodle.jpg", Score = 0 }
+                new Cookie("Gingerbread", 2024, "/images/gingerbread-2024.jpg", "Michael"),
+                new Cookie("Tiramisu", 2024, "/images/tiramisu-2024.jpg", "Maria"),
+                new Cookie("Grocery Store Chocolate", 2024, "/images/grocerystorechocolate-2024.jpg", "Christopher"),
+                new Cookie("Snickerdoodle", 2024, "/images/snickerdoodle.jpg", "Dave")
             );
 
             db.SaveChanges();

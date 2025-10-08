@@ -22,7 +22,7 @@ public class CookiesController : ControllerBase
             .Select(c => new { c.Id, c.CookieName, c.Image })
             .ToListAsync();
 
-        return Ok(new { success = true, data = cookies });// automatically serialized to JSON
+        return Ok(new { success = true, data = cookies });
     }
 }
 //    // POST /api/cookies

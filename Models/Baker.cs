@@ -1,6 +1,26 @@
-﻿namespace Carlile_Cookie_Competition.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Carlile_Cookie_Competition.Models
 {
-    public class Class
+    [Table("Baker")]
+    public class Baker
     {
+        [Key]
+        [Column("id")]
+        public int Id { get; set; }
+
+        [Column("baker_name")]
+        public string BakerName { get; set; } = "";
+
+        [Column("hasVoted")]
+        public bool HasVoted { get; set; }
+
+        // Foreign key to Cookie.id
+        [Column("cookie_id")]
+        public int? CookieId { get; set; }
+
+        [ForeignKey("CookieId")]
+        public Cookie? Cookie { get; set; }
     }
 }

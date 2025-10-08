@@ -7,13 +7,13 @@ namespace Carlile_Cookie_Competition.Models
     public class YearRecord
     {
         [Key]
-        [Column("id")]
+        [Column("Id")]
         public int Id { get; set; }
 
-        [Column("year")]
+        [Column("Year")]
         public int YearNumber { get; set; }
 
-        [Column("resultsViewable")]
+        [Column("ResultsViewable")]
         public bool ResultsViewable { get; set; } = false;
     }
 }

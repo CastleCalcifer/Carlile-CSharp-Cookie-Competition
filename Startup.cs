@@ -61,11 +61,49 @@ namespace CookieVotingApi
                 endpoints.MapControllers();
             });
 
+
             // Run migrations + seed data on startup
             using var scope = services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            db.Database.Migrate();
-            DbSeeder.EnsureSeed(db);
-        }
+            // in Startup.Configure(...) after creating scope or in Program after Build() but before Run()
+            // Use only in Development
+            if (env.IsDevelopment())
+            {
+                try
+                {
+                    // Option A: delete the database file (equivalent to EnsureDeleted)
+                    // This will physically remove the file used by SQLite, then Migrate will recreate it.
+                    var connString = db.Database.GetDbConnection().ConnectionString;
+                    Console.WriteLine($"[DevReset] DB connection: {connString}");
+
+                    // If you're using a file-based SQLite connection like "Data Source=votes.db"
+                    // we can call EnsureDeleted (EF) which works cross-provider.
+                    db.Database.EnsureDeleted();   // destroy any existing DB (dev only)
+
+                    // Recreate schema from migrations (preferred if you use migrations)
+                    db.Database.Migrate();
+
+                    // Or, if you are not using migrations and prefer a quick create:
+                    // db.Database.EnsureCreated();
+
+                    // Seed demo data
+                    DbSeeder.EnsureSeed(db);
+
+                    Console.WriteLine("[DevReset] DB deleted, migrated, and seeded.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[DevReset] Error resetting DB: {ex}");
+                    // Consider rethrowing in dev so you notice the failure:
+                    throw;
+                }
+            }
+            else
+            {
+                db.Database.Migrate();
+                DbSeeder.EnsureSeed(db);
+            }
+
+            }
     }
 }

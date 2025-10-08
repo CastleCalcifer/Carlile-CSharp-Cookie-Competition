@@ -33,7 +33,8 @@ function createCookieCard(cookie, idx) {
     const imgDiv = document.createElement('div');
     imgDiv.className = 'p-2';
     const img = document.createElement('img');
-    img.src = cookie.imageUrl;
+    img.src = cookie.image;
+    console.log(cookie.image);
     img.className = 'cookieImage';
     imgDiv.appendChild(img);
 

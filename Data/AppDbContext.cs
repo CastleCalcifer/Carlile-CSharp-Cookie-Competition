@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using CookieVotingApi.Models;
 using Carlile_Cookie_Competition.Models;
 
-namespace CookieVotingApi.Data
+namespace Carlile_Cookie_Competition.Data
 {
     public class AppDbContext : DbContext
     {
