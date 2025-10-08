@@ -3,10 +3,26 @@ const YEAR = 2024; // or compute dynamically
 const cookiesContainer = document.getElementById('cookiesContainer');
 
 async function fetchCookies(year) {
-    const res = await fetch(`/api/cookies?year=${year}`);
-    const payload = await res.json();
-    if (!payload.success) throw new Error(payload.message || 'Failed to load cookies');
-    return payload.data; // array of CookieDto
+    // Build absolute URL using the page origin to avoid surprises
+    const url = `${window.location.origin}/api/cookies?year=${year}`;
+    console.log('[debug] fetching cookies from:', url);
+
+    const res = await fetch(url);
+    // log status and headers
+    console.log('[debug] fetch status:', res.status, res.statusText);
+    for (const [k, v] of res.headers) console.log(`[debug] res header: ${k} = ${v}`);
+
+    const text = await res.text();
+    console.log('[debug] raw response body:', text);
+
+    // try to parse JSON, but surface parse errors
+    try {
+        const payload = JSON.parse(text);
+        if (!payload.success) throw new Error(payload.message || 'API returned success:false');
+        return payload.data;
+    } catch (err) {
+        throw new Error(`Failed to get cookies: ${err.message} (raw: ${text})`);
+    }
 }
 
 function createCookieCard(cookie, idx) {
