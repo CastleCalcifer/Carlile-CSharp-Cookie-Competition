@@ -7,8 +7,9 @@ namespace Carlile_Cookie_Competition.Dtos
 
     public class VoteDto
     {
-        public string UserId { get; set; }
+        public required string UserId { get; set; }
         public int CookieId { get; set; }
         public bool IsBakerVote { get; set; }
+        public string? VoterId { get; internal set; }
     }
 }

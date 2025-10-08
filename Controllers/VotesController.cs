@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Carlile_Cookie_Competition.Models;
-using Carlile_Cookie_Competition.Data;
 using Carlile_Cookie_Competition.Dtos;
 
 [ApiController]

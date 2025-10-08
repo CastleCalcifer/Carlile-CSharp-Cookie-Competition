@@ -17,7 +17,7 @@ public class CookiesController : ControllerBase
         var cookies = _context.Cookies.Select(c => new CookieDto
         {
             Id = c.Id,
-            Name = c.Name,
+            Name = c.CookieName,
             BakerId = c.BakerId
         }).ToList();
         return Ok(cookies);
