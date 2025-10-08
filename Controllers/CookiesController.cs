@@ -18,7 +18,8 @@ public class CookiesController : ControllerBase
     {
         var cookies = await _db.Cookies
             .Where(c => c.Year == year)
-            .Select(c => new { c.Id, c.CookieName, c.ImageUrl })
+            .OrderBy(c => c.Id)
+            .Select(c => new { c.Id, c.CookieName, c.Image })
             .ToListAsync();
 
         return Ok(new { success = true, data = cookies });// automatically serialized to JSON
