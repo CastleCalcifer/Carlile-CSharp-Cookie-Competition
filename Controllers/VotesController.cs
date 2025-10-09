@@ -23,7 +23,6 @@ namespace Carlile_Cookie_Competition.Controllers
         private static int PointsForRank(int rankIndex) =>
             rankIndex < PointsByRank.Length ? PointsByRank[rankIndex] : 0;
 
-
         [HttpPost("vote")]
         public async Task<IActionResult> SubmitVote([FromBody] SubmitVotesRequest req)
         {

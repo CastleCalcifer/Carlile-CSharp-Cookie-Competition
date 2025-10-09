@@ -16,8 +16,7 @@ async function fetchResults(year) {
 
 function makeCookieCard(positionLabel, cookie) {
     const div = document.createElement('div');
-    div.className = 'cookieOption';
-    // use provided imageUrl or build from imageFileName
+    div.className = 'd-flex flex-column justify-content-center align-items-center cookieOption';
     const imageUrl = cookie.imageUrl ?? (cookie.imageFileName ? `/images/${cookie.imageFileName}` : '/images/placeholder.jpg');
     div.innerHTML = `
     <div class="p-2">
@@ -39,7 +38,7 @@ function makeAwardCard(title, cookie, pointsField) {
     <div class="p-2">
       <h2>${title}</h2>
       <h3>${cookie ? escapeHtml(cookie.cookieName) : '—'}</h3>
-      <img src="${imageUrl}" alt="${cookie ? escapeHtml(cookie.cookieName) : ''}" class="award-image"/>
+      <img src="${imageUrl}" alt="${cookie ? escapeHtml(cookie.cookieName) : ''}" class ="cookieImage">
       <h4>Total Score: ${points}</h4>
     </div>
   `;
