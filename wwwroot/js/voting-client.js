@@ -139,7 +139,7 @@ document.getElementById('submitVotes').addEventListener('click', async () => {
 
         // success
         alert('Thanks — your vote has been recorded!');
-        window.location.href = '/awards.html'; // or whatever you use
+        window.location.href = '/awards.html';
     } catch (err) {
         console.error('submit error', err);
         alert('Network error submitting votes. Please try again.');

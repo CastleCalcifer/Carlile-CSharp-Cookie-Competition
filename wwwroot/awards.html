@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Awards</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+    <main class="container">
+        <h1>Awards</h1>
+
+        <div id="errorMsg" style="color:darkred;"></div>
+
+        <div class="row">
+            <div class="award-card">
+                <h2>Most Creative</h2>
+                <img id="awardImage0" src="/images/placeholder.jpg" alt="Most Creative image" class="award-image" />
+                <div class="awardDropdown" id="creativeContainer">
+                    <select id="mostCreative" class="form-select"></select>
+                </div>
+            </div>
+
+            <div class="award-card">
+                <h2>Best Presentation</h2>
+                <img id="awardImage1" src="/images/placeholder.jpg" alt="Best Presentation image" class="award-image" />
+                <div class="awardDropdown" id="presentationContainer">
+                    <select id="bestPresentation" class="form-select"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-2">
+            <button id="submitAwards" class="btn btn-primary">Submit Awards</button>
+        </div>
+    </main>
+
+    <script src="/js/awards-client.js" defer></script>
+</body>
+</html>
