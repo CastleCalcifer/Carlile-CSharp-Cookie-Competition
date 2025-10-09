@@ -1,103 +1,96 @@
-//using Xunit;
-//using FluentAssertions;
+//// tests/CookieVotingApi.Tests/VoterControllerTests.cs
+//using System.Collections.Generic;
+//using System.Linq;
 //using System.Threading.Tasks;
-//using Carlile_Cookie_Competition.Tests;
-////using Carlile_Cookie_Competition.Models;
-////using Carlile_Cookie_Competition.Services;
+//using Microsoft.EntityFrameworkCore;
+//using Xunit;
+//using Microsoft.AspNetCore.Mvc;
+//using Carlile_Cookie_Competition.Controllers;
+//using Carlile_Cookie_Competition.Data;
+//using Carlile_Cookie_Competition.Dtos;
+//using Carlile_Cookie_Competition.Models;
 
-//public class CookieVotingApiTests
+//namespace Carlile_Cookie_Competiion.Tests
 //{
-//    [Fact]
-//    public async Task GetCookies_ReturnsAllCookies()
+//    public class VoterControllerTests
 //    {
-//        // Arrange
-//        var service = TestHelper.CreateCookieServiceWithSampleData();
+//        private AppDbContext CreateContext(string dbName)
+//        {
+//            var options = new DbContextOptionsBuilder<AppDbContext>()
+//                .UseInMemoryDatabase(databaseName: dbName)
+//                .Options;
+//            return new AppDbContext(options);
+//        }
 
-//        // Act
-//        var cookies = await service.GetCookiesAsync();
+//        [Fact]
+//        public async Task SubmitVote_InsertsVotesAndIncrementsScores()
+//        {
+//            // arrange
+//            var db = CreateContext("SubmitVoteTest1");
+//            // seed 4 cookies for 2024
+//            db.Cookies.AddRange(new[]
+//            {
+//                new Cookie("A", 2024, "/images/a.jpg", "bakerA"),
+//                new Cookie("B", 2024, "/images/b.jpg", "bakerB"),
+//                new Cookie("C", 2024, "/images/c.jpg", "bakerC"),
+//                new Cookie("D", 2024, "/images/d.jpg", "bakerD"),
+//            });
+//            await db.SaveChangesAsync();
 
-//        // Assert
-//        cookies.Should().NotBeNullOrEmpty();
-//        cookies.Should().Contain(c => c.Name == "Chocolate Chip");
-//    }
+//            var controller = new VoterController(db);
 
-//    [Fact]
-//    public async Task VoteCookie_AddsVoteForCookie()
-//    {
-//        // Arrange
-//        var service = TestHelper.CreateCookieServiceWithSampleData();
-//        var userId = "user1";
-//        var cookieId = 1;
+//            var req = new SubmitVotesRequest(2024, new List<int> {
+//                db.Cookies.OrderBy(c => c.Id).Select(c => c.Id).First(),
+//                db.Cookies.OrderBy(c => c.Id).Select(c => c.Id).Skip(1).First(),
+//                db.Cookies.OrderBy(c => c.Id).Select(c => c.Id).Skip(2).First(),
+//                db.Cookies.OrderBy(c => c.Id).Select(c => c.Id).Skip(3).First(),
+//            }, "tester-1");
 
-//        // Act
-//        var result = await service.VoteAsync(userId, cookieId);
+//            // act
+//            var result = await controller.SubmitVote(req) as OkObjectResult;
 
-//        // Assert
-//        result.Should().BeTrue();
-//        var votes = await service.GetVotesForCookieAsync(cookieId);
-//        votes.Should().Contain(v => v.UserId == userId);
-//    }
+//            // assert
+//            Assert.NotNull(result);
+//            Assert.Equal(200, result.StatusCode);
 
-//    [Fact]
-//    public async Task GetResults_ReturnsVoteCountsForEachCookie()
-//    {
-//        // Arrange
-//        var service = TestHelper.CreateCookieServiceWithSampleData();
-//        await service.VoteAsync("user1", 1);
-//        await service.VoteAsync("user2", 2);
+//            // Check votes inserted
+//            var votes = db.Votes.ToList();
+//            Assert.Equal(4, votes.Count);
 
-//        // Act
-//        var results = await service.GetResultsAsync();
+//            // Check scores - using PointsByRank mapping from controller: 10,7,4,1
+//            var cookieList = db.Cookies.OrderBy(c => c.Id).ToList();
+//            Assert.Equal(10, cookieList[0].Score);
+//            Assert.Equal(7, cookieList[1].Score);
+//            Assert.Equal(4, cookieList[2].Score);
+//            Assert.Equal(1, cookieList[3].Score);
+//        }
 
-//        // Assert
-//        results.Should().Contain(r => r.CookieId == 1 && r.VoteCount == 1);
-//        results.Should().Contain(r => r.CookieId == 2 && r.VoteCount == 1);
-//    }
+//        [Fact]
+//        public async Task SubmitVote_PreventsDuplicateVoterIfVoterIdProvided()
+//        {
+//            var db = CreateContext("SubmitVoteTest2");
+//            db.Cookies.AddRange(new[]
+//            {
+//                new Cookie("A", 2024, "/i/a.jpg", "bA"),
+//                new Cookie("B", 2024, "/i/b.jpg", "bB"),
+//                new Cookie("C", 2024, "/i/c.jpg", "bC"),
+//                new Cookie("D", 2024, "/i/d.jpg", "bD"),
+//            });
+//            await db.SaveChangesAsync();
 
-//    [Fact]
-//    public async Task BakerCannotVoteForOwnCookie()
-//    {
-//        // Arrange
-//        var service = TestHelper.CreateCookieServiceWithSampleData();
-//        var bakerId = "baker1";
-//        var ownCookieId = 1; // Assume baker1 owns cookie 1
+//            var controller = new VoterController(db);
 
-//        // Act
-//        var result = await service.BakerVoteAsync(bakerId, ownCookieId);
+//            var cookieIds = db.Cookies.OrderBy(c => c.Id).Select(c => c.Id).ToList();
 
-//        // Assert
-//        result.Should().BeFalse();
-//    }
+//            var req1 = new SubmitVotesRequest(2024, cookieIds, "voterX");
+//            var ok1 = await controller.SubmitVote(req1) as OkObjectResult;
+//            Assert.NotNull(ok1);
 
-//    [Fact]
-//    public async Task BakerCanVoteForOtherCookies()
-//    {
-//        // Arrange
-//        var service = TestHelper.CreateCookieServiceWithSampleData();
-//        var bakerId = "baker1";
-//        var otherCookieId = 2; // Assume baker1 does not own cookie 2
-
-//        // Act
-//        var result = await service.BakerVoteAsync(bakerId, otherCookieId);
-
-//        // Assert
-//        result.Should().BeTrue();
-//    }
-
-//    [Fact]
-//    public async Task UserCannotVoteTwiceForSameCookie()
-//    {
-//        // Arrange
-//        var service = TestHelper.CreateCookieServiceWithSampleData();
-//        var userId = "user1";
-//        var cookieId = 1;
-
-//        // Act
-//        var firstVote = await service.VoteAsync(userId, cookieId);
-//        var secondVote = await service.VoteAsync(userId, cookieId);
-
-//        // Assert
-//        firstVote.Should().BeTrue();
-//        secondVote.Should().BeFalse();
+//            // second attempt same voter => Conflict
+//            var req2 = new SubmitVotesRequest(2024, cookieIds, "voterX");
+//            var conflict = await controller.SubmitVote(req2) as ObjectResult;
+//            Assert.NotNull(conflict);
+//            Assert.Equal(409, conflict.StatusCode);
+//        }
 //    }
 //}

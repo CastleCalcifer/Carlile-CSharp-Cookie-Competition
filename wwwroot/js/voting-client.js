@@ -101,49 +101,50 @@ async function initPage() {
 }
 
 document.getElementById('submitVotes').addEventListener('click', async () => {
-    // collect selected cookieIds in order of the rank
-    // we used selects where each select corresponds to a cookie; we need to transform into an ordered list
-    // Approach: read each select's selected rank and build array at position rank-1 with cookieId
     const selects = Array.from(document.querySelectorAll('select.rank-select'));
-    // Build array of length selects.length filled with null
     const ordered = new Array(selects.length).fill(null);
 
     for (const s of selects) {
         const rankVal = s.value; // '' or '1'..'N'
         const cookieId = Number(s.dataset.cookieId);
         if (rankVal) {
-            const idx = Number(rankVal) - 1; // position in ranking
+            const idx = Number(rankVal) - 1;
             ordered[idx] = cookieId;
         }
     }
 
-    // Validate: ensure required ranks are filled (e.g. no nulls)
     if (ordered.some(v => v === null)) {
         alert('Please select all ranks before submitting.');
         return;
     }
 
-    // Prepare request
     const req = {
         year: YEAR,
         cookieIds: ordered,
-        voterId: null
     };
 
     try {
-        const res = await fetch('/api/votes', {
+        const res = await fetch(`${window.location.origin}/api/voter/vote`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(req),
         });
+
         const payload = await res.json();
-        if (!payload.success) throw new Error(payload.message || 'Failed to submit votes');
-        // redirect to awards page (client-side)
-        window.location.href = '/awards.html'; // or a route you implemented
+        if (!res.ok) {
+            const msg = payload?.message || `Server returned ${res.status}`;
+            alert(`Error: ${msg}`);
+            return;
+        }
+
+        // success
+        alert('Thanks — your vote has been recorded!');
+        window.location.href = '/awards.html'; // or whatever you use
     } catch (err) {
-        console.error(err);
-        alert('Error submitting votes. Please try again.');
+        console.error('submit error', err);
+        alert('Network error submitting votes. Please try again.');
     }
 });
+
 
 initPage();

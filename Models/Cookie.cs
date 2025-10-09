@@ -20,7 +20,6 @@ namespace Carlile_Cookie_Competition.Models
         [Column("baker_name")]
         public string BakerName { get; set; } = "";
 
-        // store year as int like in your Flask model
         [Column("year")]
         public int Year { get; set; }
 
@@ -33,12 +32,7 @@ namespace Carlile_Cookie_Competition.Models
         [Column("presentation_points")]
         public int PresentationPoints { get; set; }
 
-        // Navigation properties (one cookie may have many bakers if that's intended)
-        // If Baker -> Cookie is one-to-many, keep this collection.
         public ICollection<Baker>? Bakers { get; set; }
-
-        // Optional: convenience constructor similar to Flask __init__
-        public Cookie() { }
 
         public Cookie(string cookieName, int year, string image, string bakerName)
         {
