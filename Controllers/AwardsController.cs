@@ -6,6 +6,9 @@ using Carlile_Cookie_Competition.Models;
 
 namespace Carlile_Cookie_Competition.Controllers
 {
+    /// <summary>
+    /// API controller for submitting awards votes.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class AwardsController : ControllerBase
@@ -13,6 +16,11 @@ namespace Carlile_Cookie_Competition.Controllers
         private readonly AppDbContext _db;
         public AwardsController(AppDbContext db) => _db = db;
 
+        /// <summary>
+        /// Submits awards for Most Creative and Best Presentation cookies.
+        /// </summary>
+        /// <param name="req">Award submission request.</param>
+        /// <returns>Result of the submission.</returns>
         [HttpPost]
         public async Task<IActionResult> PostAwards([FromBody] AwardSubmitRequest req)
         {
@@ -21,12 +29,7 @@ namespace Carlile_Cookie_Competition.Controllers
             if (req.MostCreativeId <= 0 || req.BestPresentationId <= 0)
                 return BadRequest(new { success = false, message = "Both awards must be selected" });
 
-            if (req.MostCreativeId == req.BestPresentationId)
-            {
-                // optional: allow or reject; here we allow but you could BadRequest
-            }
-
-            // Validate cookies exist for year
+            // Validate cookies exist for the given year
             var ids = new[] { req.MostCreativeId, req.BestPresentationId };
             var cookies = await _db.Cookies
                 .Where(c => ids.Contains(c.Id) && c.Year == req.Year)
@@ -35,14 +38,12 @@ namespace Carlile_Cookie_Competition.Controllers
             if (cookies.Count != 2)
                 return BadRequest(new { success = false, message = "One or both cookie IDs are invalid for the selected year." });
 
-            // Optional: prevent duplicate voting by voter id
+            // Prevent duplicate award voting by voter id (if VoterId is provided)
             if (!string.IsNullOrWhiteSpace(req.VoterId))
             {
                 var already = await _db.Votes
                     .Include(v => v.Cookie)
                     .AnyAsync(v => v.VoterId == req.VoterId && v.Cookie != null && v.Cookie.Year == req.Year && v.Points == -1);
-                // NOTE: above uses a special Points == -1 sentinel for award votes if you choose to record them in Votes table,
-                // or check a separate Awards table if you implement that. If not recording votes, omit this check.
                 if (already)
                     return Conflict(new { success = false, message = "You have already submitted awards for this year." });
             }
@@ -50,19 +51,15 @@ namespace Carlile_Cookie_Competition.Controllers
             using var tx = await _db.Database.BeginTransactionAsync();
             try
             {
-                // Atomic DB-side increments to avoid lost updates
+                // Increment creative and presentation points atomically
                 await _db.Database.ExecuteSqlInterpolatedAsync(
                     $"UPDATE Cookie SET creative_points = COALESCE(creative_points, 0) + 1 WHERE id = {req.MostCreativeId}");
                 await _db.Database.ExecuteSqlInterpolatedAsync(
                     $"UPDATE Cookie SET presentation_points = COALESCE(presentation_points, 0) + 1 WHERE id = {req.BestPresentationId}");
 
-                // Optionally record the award submission as a Vote or Award record:
-                // Uncomment and adapt if you have an Award or Vote model for audit:
-                /*
-                _db.Votes.Add(new Vote { CookieId = req.MostCreativeId, VoterId = req.VoterId, Points = -1 });
-                _db.Votes.Add(new Vote { CookieId = req.BestPresentationId, VoterId = req.VoterId, Points = -1 });
-                await _db.SaveChangesAsync();
-                */
+                // Optionally record the award submission for auditing
+                // _db.Votes.Add(new Vote { CookieId = req.MostCreativeId, VoterId = req.VoterId, Points = -1 });
+                // _db.Votes.Add(new Vote { CookieId = req.BestPresentationId, VoterId = req.VoterId, Points = -1 });
 
                 await _db.SaveChangesAsync();
                 await tx.CommitAsync();
