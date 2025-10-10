@@ -74,30 +74,35 @@ namespace CookieVotingApi
             // Ensure database is migrated and seeded on startup
             using var scope = services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            if (env.IsDevelopment())
-            {
-                try
-                {
-                    var connString = db.Database.GetDbConnection().ConnectionString;
-                    Console.WriteLine($"[DevReset] DB connection: {connString}");
 
-                    db.Database.EnsureDeleted(); // Reset DB for development
-                    db.Database.Migrate();
-                    DbSeeder.EnsureSeed(db);
+            // IF YOU NEED TO TEST THE DATABASE UNCOMMENT THIS
+            //if (env.IsDevelopment())
+            //{
+            //    try
+            //    {
+            //        var connString = db.Database.GetDbConnection().ConnectionString;
+            //        Console.WriteLine($"[DevReset] DB connection: {connString}");
 
-                    Console.WriteLine("[DevReset] DB deleted, migrated, and seeded.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"[DevReset] Error resetting DB: {ex}");
-                    throw;
-                }
-            }
-            else
-            {
+            //        db.Database.EnsureDeleted(); // Reset DB for development
+            //        db.Database.Migrate();
+            //        DbSeeder.EnsureSeed(db);
+
+            //        Console.WriteLine("[DevReset] DB deleted, migrated, and seeded.");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine($"[DevReset] Error resetting DB: {ex}");
+            //        throw;
+            //    }
+            //}
+            //else
+            //{
+            //    db.Database.Migrate();
+            //    DbSeeder.EnsureSeed(db);
+            //}
+                // for production keep these uncommented.
                 db.Database.Migrate();
                 DbSeeder.EnsureSeed(db);
-            }
         }
     }
 }
