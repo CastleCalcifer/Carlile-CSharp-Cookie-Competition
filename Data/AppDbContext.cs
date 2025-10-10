@@ -17,12 +17,28 @@ namespace Carlile_Cookie_Competition.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Baker>()
-                .HasOne(b => b.Cookie)
-                .WithMany(c => c.Bakers)
-                .HasForeignKey(b => b.CookieId)
-                .OnDelete(DeleteBehavior.SetNull);
+            // Baker.CookieId is a nullable FK to Cookie.Id. Enforce one-to-one relationship:
+            modelBuilder.Entity<Baker>(b =>
+            {
+                // ensure CookieId column maps as optional FK
+                b.HasOne(x => x.Cookie)
+                 .WithOne(x => x.Baker)                  // Cookie.Baker navigation
+                 .HasForeignKey<Baker>(x => x.CookieId) // Baker.CookieId is the FK
+                 .OnDelete(DeleteBehavior.SetNull);  
 
+                // Make cookie_id unique so only one baker can reference a cookie
+                b.HasIndex(x => x.CookieId)
+                 .IsUnique();
+
+                b.HasIndex(x => x.BakerName)
+                 .IsUnique();
+            });
+
+            // Additional configuration for Cookie if desired
+            modelBuilder.Entity<Cookie>(c =>
+            {
+                c.Property(x => x.Image).HasDefaultValue("/images/placeholder.jpg");
+            });
         }
     }
 }

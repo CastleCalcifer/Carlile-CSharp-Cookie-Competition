@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Carlile_Cookie_Competition.Models
 {
@@ -14,7 +13,7 @@ namespace Carlile_Cookie_Competition.Models
         [Column("baker_name")]
         public string BakerName { get; set; } = "";
 
-        [Column("hasVoted")]
+        [Column("has_voted")]
         public bool HasVoted { get; set; }
 
         // Foreign key to Cookie.id
@@ -23,7 +22,18 @@ namespace Carlile_Cookie_Competition.Models
 
         [ForeignKey("CookieId")]
         public Cookie? Cookie { get; set; }
+
+        [Column("pin_hash")]
         public string? PinHash { get; set; }
 
+        public Baker() { }
+
+        public Baker(string bakerName, int? cookieId = null)
+        {
+            BakerName = bakerName;
+            CookieId = cookieId;
+            HasVoted = false;
+            PinHash = null;
+        }
     }
 }

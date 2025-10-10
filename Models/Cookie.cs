@@ -20,6 +20,9 @@ namespace Carlile_Cookie_Competition.Models
         [Column("baker_name")]
         public string BakerName { get; set; } = "";
 
+        [Column("baker")]
+        public Baker? Baker { get; set; }
+
         [Column("year")]
         public int Year { get; set; }
 
@@ -32,7 +35,7 @@ namespace Carlile_Cookie_Competition.Models
         [Column("presentation_points")]
         public int PresentationPoints { get; set; }
 
-        public ICollection<Baker>? Bakers { get; set; }
+        public Cookie() { }
 
         public Cookie(string cookieName, int year, string image, string bakerName)
         {
