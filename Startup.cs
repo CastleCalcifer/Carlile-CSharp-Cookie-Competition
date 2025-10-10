@@ -100,9 +100,9 @@ namespace CookieVotingApi
             //    db.Database.Migrate();
             //    DbSeeder.EnsureSeed(db);
             //}
-                // for production keep these uncommented.
-                db.Database.Migrate();
-                DbSeeder.EnsureSeed(db);
+            // for production keep these uncommented.
+            db.Database.Migrate();
+            DbSeeder.EnsureSeed(db);
         }
     }
 }

@@ -25,7 +25,8 @@ Carlile-Cookie-Competition is a web application for managing and voting in a fam
 
 3. **Build and Run:**
    - Press `F5` to build and run the project with debugging, or `Ctrl+F5` to run without debugging.
-   - The application will start and open in your default browser (typically at `https://localhost:5001` or similar).
+   - The application will start and open in your default browser (typically at `https://localhost:7244` or similar).
+   - Visual Studio should automatically open a new window in your default browser
 
 ---
 
@@ -40,12 +41,12 @@ Carlile-Cookie-Competition is a web application for managing and voting in a fam
    - Run:
 3. **Build and Run:**
    - In the terminal, run:
-- The application will start and display the listening URL (e.g., `https://localhost:5001`).
+- The application will start and display the listening URL (e.g., `https://localhost:7244`).
 
 
 ### Accessing the Website
 
-- Open your browser and navigate to the URL shown in the terminal or Visual Studio output (e.g., `https://localhost:5001`).
+- Open your browser and navigate to the URL shown in the terminal or Visual Studio output (e.g., `https://localhost:7244`).
 - Use the navigation bar to access voting, results, and awards pages.
 
 ---
@@ -54,3 +55,4 @@ Carlile-Cookie-Competition is a web application for managing and voting in a fam
 
 - The database file (`votes.db`) will be created automatically in the project directory.
 - When logging in as a baker, to log out you need to clear your cookies. This website focuses on UX since it is made for a specific purpose, so a log out system could complicate things for non techsaavy users.
+- By default Swagger is enabled for easy API testing. To get to the home page, remove the /swagger/ from the address bar.

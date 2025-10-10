@@ -40,10 +40,10 @@
                         <a class="nav-link" href="/voting.html">Voting</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/results.html">Results</a>
+                        <a class="nav-link" href="/awards.html">Awards</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/awards.html">Awards</a>
+                        <a class="nav-link" href="/results.html">Results</a>
                     </li>
                 </ul>
             </div>
@@ -55,24 +55,31 @@
         <div id="errorMsg" style="color:darkred;"></div>
 
         <div class="row">
-            <div class="award-card">
-                <h2>Most Creative</h2>
-                <img id="awardImage0" src="/images/placeholder.jpg" alt="Most Creative image" class="award-image" />
-                <div class="awardDropdown" id="creativeContainer">
-                    <select id="mostCreative" class="form-select"></select>
+            <div class="award-card d-flex flex-column justify-content-center align-items-center cookieOption">
+                <div class="p-2">
+                    <h2>Most Creative</h2>
+                    <img id="awardImage0" src="/images/placeholder.jpg" alt="Most Creative image" class="cookieImage" />
+                    <div class="p-2">
+                        <div class="awardDropdown" id="creativeContainer">
+                            <select id="mostCreative" class="form-select"></select>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="award-card">
+        </div>
+        <div class="award-card d-flex flex-column justify-content-center align-items-center cookieOption">
+            <div class="p-2">
                 <h2>Best Presentation</h2>
-                <img id="awardImage1" src="/images/placeholder.jpg" alt="Best Presentation image" class="award-image" />
-                <div class="awardDropdown" id="presentationContainer">
-                    <select id="bestPresentation" class="form-select"></select>
+                <img id="awardImage1" src="/images/placeholder.jpg" alt="Best Presentation image" class="cookieImage" />
+                <div class="p-2">
+                    <div class="awardDropdown" id="presentationContainer">
+                        <select id="bestPresentation" class="form-select"></select>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="p-2">
+        <div class="d-flex flex-column justify-content-center align-items-center cookieOption">
             <button id="submitAwards" class="btn btn-primary">Submit Awards</button>
         </div>
     </main>

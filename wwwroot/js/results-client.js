@@ -21,9 +21,9 @@ function makeCookieCard(positionLabel, cookie) {
     div.innerHTML = `
     <div class="p-2">
       <h2>${positionLabel}</h2>
-      <h3>${escapeHtml(cookie.cookieName)}</h3>
+      <h2>${escapeHtml(cookie.cookieName)}</h2>
       <img src="${imageUrl}" alt="${escapeHtml(cookie.cookieName)}" class="cookieImage"/>
-      <h4>Total Score: ${cookie.score ?? cookie.Score ?? 0}</h4>
+      <h2>Total Score: ${cookie.score ?? cookie.Score ?? 0}</h2>
     </div>
   `;
     return div;
@@ -37,9 +37,9 @@ function makeAwardCard(title, cookie, pointsField) {
     div.innerHTML = `
     <div class="p-2">
       <h2>${title}</h2>
-      <h3>${cookie ? escapeHtml(cookie.cookieName) : '—'}</h3>
+      <h2>${cookie ? escapeHtml(cookie.cookieName) : '—'}</h2>
       <img src="${imageUrl}" alt="${cookie ? escapeHtml(cookie.cookieName) : ''}" class ="cookieImage">
-      <h4>Total Score: ${points}</h4>
+      <h2>Total Score: ${points}</h2>
     </div>
   `;
     return div;
