@@ -5,6 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.DataProtection;
+using Carlile_Cookie_Competition.Models; // Baker model
+
 using System;
 
 namespace CookieVotingApi
@@ -17,7 +21,6 @@ namespace CookieVotingApi
             Configuration = configuration;
         }
 
-        // -------------------- ConfigureServices --------------------
         public void ConfigureServices(IServiceCollection services)
         {
             // Add Web API controllers
@@ -31,6 +34,12 @@ namespace CookieVotingApi
             var conn = Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=votes.db";
             services.AddDbContext<AppDbContext>(opts => opts.UseSqlite(conn));
 
+            // Data protection (optional but explicit)
+            services.AddDataProtection();
+
+            // Password hasher for Baker PINs
+            services.AddScoped<IPasswordHasher<Baker>, PasswordHasher<Baker>>();
+
             // CORS for local front-end
             services.AddCors(options =>
             {
@@ -40,6 +49,7 @@ namespace CookieVotingApi
                           .AllowAnyMethod());
             });
         }
+
 
         // -------------------- Configure middleware pipeline --------------------
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services)

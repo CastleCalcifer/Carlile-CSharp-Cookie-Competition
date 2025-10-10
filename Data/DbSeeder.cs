@@ -13,8 +13,18 @@ namespace Carlile_Cookie_Competition.Data
                 new Cookie("Gingerbread", 2024, "/images/gingerbread-2024.jpg", "Michael"),
                 new Cookie("Tiramisu", 2024, "/images/tiramisu-2024.jpg", "Maria"),
                 new Cookie("Grocery Store Chocolate", 2024, "/images/grocerystorechocolate-2024.jpg", "Christopher"),
-                new Cookie("Snickerdoodle", 2024, "/images/snickerdoodle.jpg", "Dave")
+                new Cookie("Snickerdoodle", 2024, "/images/snickerdoodle.jpg", "Bridget")
             );
+
+            if (db.Bakers.Any()) return;
+
+            db.Bakers.AddRange(
+                new Baker("Christopher", 1, new Cookie("Grocery Store Chocolate", 2024, "/images/grocerystorechocolate-2024.jpg", "Christopher")),
+                new Baker("Maria", 2, new Cookie("Tiramisu", 2024, "/images/tiramisu-2024.jpg", "Maria")),
+                new Baker("Michael", 3, new Cookie("Gingerbread", 2024, "/images/gingerbread-2024.jpg", "Michael")),
+                new Baker("Bridget", 4, new Cookie("Snickerdoodle", 2024, "/images/snickerdoodle.jpg", "Bridget"))
+            );
+
 
             db.SaveChanges();
         }

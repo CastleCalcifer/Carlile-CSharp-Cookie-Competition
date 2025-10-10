@@ -82,7 +82,18 @@ async function initPage() {
         const cookies = await fetchCookies(YEAR);
         // clear container
         cookiesContainer.innerHTML = '';
+        // detect current baker
+        let bakerId = null;
+        try {
+            const bres = await fetch('/api/bakers/current');
+            const bp = await bres.json();
+            if (bp?.data?.id) bakerId = bp.data.id;
+        } catch (err) { /* ignore */ }
 
+        // request cookies excluding baker's cookie
+        const base = window.location.origin;
+        const url = bakerId ? `${base}/api/cookies?year=${YEAR}&excludeBakerId=${bakerId}` : `${base}/api/cookies?year=${YEAR}`;
+        const res = await fetch(url);
         // render cookie cards
         cookies.forEach((c, idx) => {
             const card = createCookieCard(c, idx);

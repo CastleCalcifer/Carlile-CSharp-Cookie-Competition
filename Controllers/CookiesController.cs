@@ -13,17 +13,26 @@ public class CookiesController : ControllerBase
     public CookiesController(AppDbContext db) => _db = db;
 
     // GET /api/cookies?year=2024
+    // in CookiesController.cs GET action
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] int year)
+    public async Task<IActionResult> Get([FromQuery] int year, [FromQuery] int? excludeBakerId = null)
     {
-        var cookies = await _db.Cookies
-            .Where(c => c.Year == year)
-            .OrderBy(c => c.Id)
-            .Select(c => new { c.Id, c.CookieName, c.Image })
-            .ToListAsync();
+        var query = _db.Cookies.Where(c => c.Year == year);
+        if (excludeBakerId.HasValue)
+        {
+            // find cookie id for baker, if any
+            var baker = await _db.Bakers.FindAsync(excludeBakerId.Value);
+            if (baker?.CookieId != null)
+            {
+                var excludeCookieId = baker.CookieId.Value;
+                query = query.Where(c => c.Id != excludeCookieId);
+            }
+        }
 
+        var cookies = await query.Select(c => new { id = c.Id, cookieName = c.CookieName, imageUrl = c.Image }).ToListAsync();
         return Ok(new { success = true, data = cookies });
     }
+
 }
 //    // POST /api/cookies
 //    [HttpPost]

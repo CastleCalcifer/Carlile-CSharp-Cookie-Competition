@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Carlile_Cookie_Competition.Models
 {
@@ -22,5 +23,7 @@ namespace Carlile_Cookie_Competition.Models
 
         [ForeignKey("CookieId")]
         public Cookie? Cookie { get; set; }
+        public string? PinHash { get; set; }
+
     }
 }
