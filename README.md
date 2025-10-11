@@ -60,6 +60,21 @@ Upcoming features include: additional awards, previous years results, a recipe b
 
 ---
 
+## Unit Tests
+Run these commands:
+dotnet new xunit -n Carlile_Cookie_Competition.Tests
+cd Carlile_Cookie_Competition.Tests
+
+dotnet add reference ../Carlile_Cookie_Competition/Carlile_Cookie_Competition.csproj
+
+dotnet add package Microsoft.AspNetCore.Mvc.Testing
+dotnet add package Microsoft.EntityFrameworkCore.InMemory
+dotnet add package Microsoft.NET.Test.Sdk
+dotnet add package coverlet.collector
+
+dotnet test
+
+
 ## Notes
 
 - The database file (`votes.db`) will be created automatically in the project directory.
