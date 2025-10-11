@@ -34,16 +34,3 @@ public class CookiesController : ControllerBase
     }
 
 }
-//    // POST /api/cookies
-//    [HttpPost]
-//    public async Task<IActionResult> Post([FromBody] VoteRequest data)
-//    {
-//        // data comes from JSON body
-//        var cookie = await _db.Cookies.FindAsync(data.CookieId);
-//        if (cookie == null) return NotFound();
-
-//        cookie.Score += data.Points;
-//        await _db.SaveChangesAsync();
-//        return Ok(new { success = true });
-//    }
-//}

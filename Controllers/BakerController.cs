@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Carlile_Cookie_Competition.Data;
 using Carlile_Cookie_Competition.Models;
+using Carlile_Cookie_Competition.Dtos;
 using System.Text;
 
 namespace Carlile_Cookie_Competition.Controllers
@@ -135,12 +136,5 @@ namespace Carlile_Cookie_Competition.Controllers
             Response.Cookies.Append(BakerCookieName, protectedValue, cookieOptions);
         }
 
-    }
-
-    // DTO for login
-    public class LoginRequest
-    {
-        public string BakerName { get; set; } = "";
-        public string Pin { get; set; } = "";
     }
 }
