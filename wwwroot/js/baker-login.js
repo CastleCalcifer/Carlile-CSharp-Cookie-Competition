@@ -51,8 +51,7 @@ async function submitPin(modal) {
 
         // success: payload.message may indicate created or login
         modal.hide();
-        // redirect to baker's special voting page (or main voting page but cookie will exclude their cookie)
-        window.location.href = `/voting.html`;
+        window.location.href = `/baker/area`;
     } catch (err) {
         document.getElementById('pinError').textContent = 'Network error';
     }
