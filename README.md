@@ -47,9 +47,9 @@ Upcoming features include: additional awards, previous years results, a recipe b
 
 2. **Restore Dependencies:**
    - Open a terminal in VSCode (`Ctrl+``).
-   - Run:
+   - Run: dotnet restore
 3. **Build and Run:**
-   - In the terminal, run:
+   - In the terminal, run:  dotnet run
 - The application will start and display the listening URL (e.g., `https://localhost:7244`).
 
 
