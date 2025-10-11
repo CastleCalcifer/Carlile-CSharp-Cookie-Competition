@@ -2,10 +2,10 @@
 
 ## Description
 
-Carlile-Cookie-Competition is a web application for managing and voting for my family's cookie competition. Participants can submit cookies, vote for their favorites, and award special recognitions such as "Most Creative" and "Best Presentation." The site tracks votes, displays results, and supports award submissions. It is built with ASP.NET Core (.NET 8), uses a RESTful API, and stores data in a SQLite database.
-Several features, such as logging out for bakers, or making it so voting has been tracked via cookies so one person cannot vote multiples times, have been purposefully ommitted. UX is the main goal of this project as my family / family friends vary wildly in tech skills and in vision capabilities. Some family members need to use the same computer or phone to cast their votes, making one vote per device not an option and making a full login system would be too much for a simple voting website.
-Heavy User / Usability testing has been done on this website, as well as proper rollout in 2024's Cookie Competition. The current features are at a level where all ages and backgrounds can easily navigate the website. 
-Proper website features has been added where appropriate, such as hashing and salting baker pins before being stored in the database. Any omitted security features are intential to reduce navigation complexity for users.
+Carlile-Cookie-Competition is a web application for managing and voting for my family's cookie competition. Participants can submit cookies, vote for their favorites, and award special recognitions such as "Most Creative" and "Best Presentation." The site tracks votes, displays results, and supports award submissions. It is built with ASP.NET Core (.NET 8), uses a RESTful API, and stores data in a SQLite database.  \\
+Several features, such as logging out for bakers, or making it so voting has been tracked via cookies so one person cannot vote multiples times, have been purposefully ommitted. UX is the main goal of this project as my family / family friends vary wildly in tech skills and in vision capabilities. Some family members need to use the same computer or phone to cast their votes, making one vote per device not an option and making a full login system would be too much for a simple voting website.  \\
+Heavy User / Usability testing has been done on this website, as well as proper rollout in 2024's Cookie Competition. The current features are at a level where all ages and backgrounds can easily navigate the website.   \\
+Proper website features has been added where appropriate, such as hashing and salting baker pins before being stored in the database. Any omitted security features are intential to reduce navigation complexity for users.  \\
 
 
 ## How to Run
