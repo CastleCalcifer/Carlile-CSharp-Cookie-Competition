@@ -1,4 +1,4 @@
-# Carlile-Cookie-Competition# Carlile-Cookie-Competition
+# Carlile-Cookie-Competition
 
 ## Description
 
