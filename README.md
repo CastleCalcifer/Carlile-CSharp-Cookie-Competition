@@ -61,18 +61,21 @@ Upcoming features include: additional awards, previous years results, a recipe b
 ---
 
 ## Unit Tests
-Run these commands:
-dotnet new xunit -n Carlile_Cookie_Competition.Tests
-cd Carlile_Cookie_Competition.Tests
+Run these commands: <br>
+dotnet new xunit -n Carlile_Cookie_Competition.Tests <br>
+cd Carlile_Cookie_Competition.Tests <br>
 
-dotnet add reference ../Carlile_Cookie_Competition/Carlile_Cookie_Competition.csproj
+dotnet add reference ../Carlile_Cookie_Competition/Carlile_Cookie_Competition.csproj <br>
 
-dotnet add package Microsoft.AspNetCore.Mvc.Testing
-dotnet add package Microsoft.EntityFrameworkCore.InMemory
-dotnet add package Microsoft.NET.Test.Sdk
-dotnet add package coverlet.collector
+dotnet add package Microsoft.AspNetCore.Mvc.Testing <br>
 
-dotnet test
+dotnet add package Microsoft.EntityFrameworkCore.InMemory <br>
+
+dotnet add package Microsoft.NET.Test.Sdk <br>
+
+dotnet add package coverlet.collector <br>
+
+dotnet test <br>
 
 
 ## Notes
