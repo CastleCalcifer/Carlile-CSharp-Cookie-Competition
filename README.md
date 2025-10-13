@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-# Carlile-Cookie-Competition
-=======
 # Carlile-Cookie-Competition
 
 ## Description
@@ -65,7 +62,19 @@ Upcoming features include: additional awards, previous years results, a recipe b
 
 ## Unit Tests
 Run these commands: <br>
-cd Tests <br>
+dotnet new xunit -n Carlile_Cookie_Competition.Tests <br>
+cd Carlile_Cookie_Competition.Tests <br>
+
+dotnet add reference ../Carlile_Cookie_Competition/Carlile_Cookie_Competition.csproj <br>
+
+dotnet add package Microsoft.AspNetCore.Mvc.Testing <br>
+
+dotnet add package Microsoft.EntityFrameworkCore.InMemory <br>
+
+dotnet add package Microsoft.NET.Test.Sdk <br>
+
+dotnet add package coverlet.collector <br>
+
 dotnet test <br>
 
 
@@ -74,4 +83,3 @@ dotnet test <br>
 - The database file (`votes.db`) will be created automatically in the project directory.
 - When logging in as a baker, to log out you need to clear your cookies. This website focuses on UX since it is made for a specific purpose, so a log out system could complicate things for non techsaavy users.
 - By default Swagger is enabled for easy API testing. To get to the home page, remove the /swagger/ from the address bar.
->>>>>>> Stashed changes
