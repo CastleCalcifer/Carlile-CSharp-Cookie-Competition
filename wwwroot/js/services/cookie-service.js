@@ -21,10 +21,16 @@ class CookieService {
             endpoint += `&excludeBakerId=${excludeBakerId}`;
         }
 
+        console.log('CookieService: Fetching from endpoint:', endpoint);
+
         try {
             const cookies = await this.api.get(endpoint);
-            return this._normalizeCookies(cookies);
+            console.log('CookieService: Raw response:', cookies);
+            const normalized = this._normalizeCookies(cookies);
+            console.log('CookieService: Normalized cookies:', normalized);
+            return normalized;
         } catch (error) {
+            console.error('CookieService: Error fetching cookies:', error);
             ErrorHandler.handleError('CookieService.getCookies', error);
             throw error;
         }

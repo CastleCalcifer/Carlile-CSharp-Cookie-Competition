@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS Test</title>
+</head>
+<body>
+    <h1>JavaScript Test</h1>
+    <div id="test-container"></div>
+    
+    <!-- Load core infrastructure first -->
+    <script src="/js/core/config.js"></script>
+    <script src="/js/core/dom-utils.js"></script>
+    <script src="/js/core/error-handler.js"></script>
+    <script src="/js/core/api-client.js"></script>
+    
+    <script>
+        console.log('Testing JavaScript structure...');
+        console.log('Config:', window.Config);
+        console.log('DomUtils:', window.DomUtils);
+        console.log('ErrorHandler:', window.ErrorHandler);
+        console.log('ApiClient:', window.ApiClient);
+        
+        // Test basic functionality
+        if (window.Config) {
+            console.log('Year:', window.Config.getYear());
+            console.log('Cookies endpoint:', window.Config.getApiEndpoint('cookies'));
+        }
+        
+        if (window.DomUtils) {
+            const testDiv = window.DomUtils.createElement('div', { className: 'test' }, 'Hello World');
+            document.getElementById('test-container').appendChild(testDiv);
+        }
+        
+        // Test API call
+        if (window.ApiClient) {
+            console.log('Testing API call...');
+            window.ApiClient.get('/api/cookies?year=2024')
+                .then(data => {
+                    console.log('API Response:', data);
+                    document.getElementById('test-container').innerHTML += '<p>API call successful!</p>';
+                })
+                .catch(error => {
+                    console.error('API Error:', error);
+                    document.getElementById('test-container').innerHTML += '<p>API call failed: ' + error.message + '</p>';
+                });
+        }
+    </script>
+</body>
+</html>

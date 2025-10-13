@@ -60,22 +60,29 @@ class VotingPage {
      */
     async _loadPageData() {
         try {
+            console.log('Loading page data...');
+            
             // Get current baker to exclude their cookies
             const currentBaker = await this.bakerService.getCurrentBaker();
             const bakerId = currentBaker?.id || null;
+            console.log('Current baker ID:', bakerId);
 
             // Load cookies
+            console.log('Fetching cookies for year:', Config.getYear());
             const cookies = await this.cookieService.getCookies(Config.getYear(), bakerId);
+            console.log('Cookies received:', cookies);
             
             if (!cookies || cookies.length === 0) {
+                console.log('No cookies found');
                 this._showNoCookies();
                 return;
             }
 
             this._renderCookies(cookies);
         } catch (error) {
+            console.error('Error loading page data:', error);
             ErrorHandler.handleError('VotingPage._loadPageData', error);
-            this._showError('Failed to load cookies');
+            this._showError('Failed to load cookies: ' + error.message);
         }
     }
 

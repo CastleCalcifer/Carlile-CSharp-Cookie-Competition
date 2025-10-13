@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie Competition - Awards</title>
     <link rel="stylesheet" href="/css/style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -11,41 +10,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton+SC&family=Playwrite+GB+J:ital,wght@0,100..400;1,100..400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@100..900&display=swap" rel="stylesheet">
+
+
 </head>
 
 <body>
     <div class="header">
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #9dccf0;">
-            <div class="container">
-                <a class="navbar-brand" href="/index.html">
-                    <img src="/images/vote.png" alt="Cookie Competition" width="30" height="30" class="d-inline-block align-text-top">
-                    Cookie Competition
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/voting.html">Vote</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/awards.html">Awards</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/results.html">Results</a>
-                        </li>
-                    </ul>
-                </div>
+            <a class="navbar-brand" href="/index.html">Cookie Competition</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/voting.html">Voting</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/awards.html">Awards</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/results.html">Results</a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </div>
-
     <div class="container mt-5 pt-4">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -53,33 +56,23 @@
                 
                 <!-- Error message container -->
                 <div id="errorMsg" class="alert alert-danger d-none" role="alert"></div>
-                
-                <!-- Voter ID input (optional) -->
-                <div class="mb-4">
-                    <label for="voterId" class="form-label">Voter ID (optional)</label>
-                    <input type="text" class="form-control" id="voterId" placeholder="Enter your voter ID">
-                </div>
-                
                 <!-- Awards selection -->
                 <div class="row">
-                    <div class="col-md-6">
-                        <h3>Most Creative</h3>
+                        <h2>Most Creative</h2>
+                        <div class="text-center">
+                            <img id="awardImage0" src="/images/placeholder.jpg" alt="Most Creative" class="cookieImage">
+                        </div>
                         <select id="mostCreative" class="form-select mb-3">
                             <option value="">--- Select cookie ---</option>
                         </select>
+                        <h2>Best Presentation</h2>
                         <div class="text-center">
-                            <img id="awardImage0" src="/images/placeholder.jpg" alt="Most Creative" class="img-fluid" style="max-height: 200px;">
+                            <img id="awardImage1" src="/images/placeholder.jpg" alt="Best Presentation" class="cookieImage">
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h3>Best Presentation</h3>
                         <select id="bestPresentation" class="form-select mb-3">
                             <option value="">--- Select cookie ---</option>
                         </select>
-                        <div class="text-center">
-                            <img id="awardImage1" src="/images/placeholder.jpg" alt="Best Presentation" class="img-fluid" style="max-height: 200px;">
-                        </div>
-                    </div>
+                    
                 </div>
                 
                 <!-- Submit button -->
@@ -92,25 +85,8 @@
         </div>
     </div>
 
-    <!-- Load core infrastructure first -->
-    <script src="/js/core/config.js"></script>
-    <script src="/js/core/dom-utils.js"></script>
-    <script src="/js/core/error-handler.js"></script>
-    <script src="/js/core/api-client.js"></script>
-    
-    <!-- Load services -->
-    <script src="/js/services/cookie-service.js"></script>
-    <script src="/js/services/baker-service.js"></script>
-    <script src="/js/services/awards-service.js"></script>
-    
-    <!-- Load components -->
-    <script src="/js/components/award-selector.js"></script>
-    
-    <!-- Load page controller -->
-    <script src="/js/pages/awards-page.js"></script>
-    
-    <!-- Load main app -->
-    <script src="/js/app.js"></script>
+    <!-- Load working JavaScript -->
+    <script src="/js/awards-client.js"></script>
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
