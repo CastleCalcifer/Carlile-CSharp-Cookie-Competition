@@ -57,10 +57,6 @@ namespace Carlile_Cookie_Competition.Controllers
                 await _db.Database.ExecuteSqlInterpolatedAsync(
                     $"UPDATE Cookie SET presentation_points = COALESCE(presentation_points, 0) + 1 WHERE id = {req.BestPresentationId}");
 
-                // Optionally record the award submission for auditing
-                // _db.Votes.Add(new Vote { CookieId = req.MostCreativeId, VoterId = req.VoterId, Points = -1 });
-                // _db.Votes.Add(new Vote { CookieId = req.BestPresentationId, VoterId = req.VoterId, Points = -1 });
-
                 await _db.SaveChangesAsync();
                 await tx.CommitAsync();
 

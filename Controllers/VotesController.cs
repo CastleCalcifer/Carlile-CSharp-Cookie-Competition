@@ -83,7 +83,6 @@ namespace Carlile_Cookie_Competition.Controllers
             catch (Exception ex)
             {
                 await tx.RollbackAsync();
-                // Consider using a logging framework in production
                 Console.WriteLine($"[VoterController] Error recording votes: {ex}");
                 return StatusCode(500, new { success = false, message = "Server error recording votes." });
             }
