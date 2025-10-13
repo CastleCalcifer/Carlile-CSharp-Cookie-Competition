@@ -1,5 +1,8 @@
-﻿// results-client.js
-const YEAR = 2024; // change or compute dynamically if you like
+﻿/**
+ * Displays results of cookies
+ * Fetches all cookies and their scores then displays them in reverse order (4th to 1st)
+ */
+const YEAR = 2024; 
 const placementsEl = document.getElementById('placements');
 const awardsEl = document.getElementById('awards');
 const errorEl = document.getElementById('resultsError');

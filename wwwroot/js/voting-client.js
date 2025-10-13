@@ -24,7 +24,6 @@ async function fetchCookies(year, excludeBakerId = null) {
 
     try {
         const payload = JSON.parse(text);
-        // if server uses envelope { success: true, data: [...] }
         const data = payload?.data ?? payload;
         return data;
     } catch (err) {
@@ -115,7 +114,6 @@ async function initPage() {
         });
 
         // 4) Initialize unique-select behavior if provided
-        // If your uniqueSelect script exposes an init function, call it here.
         if (window.initRankSelects) {
             try { window.initRankSelects(); } catch (err) { console.warn('initRankSelects failed', err); }
         } else {
@@ -129,7 +127,6 @@ async function initPage() {
     }
 }
 
-// fallback simple uniqueness handler (safe to keep even if you have your own)
 function attachSimpleUniqueSelectHandler() {
     const handler = (e) => {
         const selects = Array.from(document.querySelectorAll('select.rank-select'));
@@ -206,5 +203,4 @@ submitBtn.addEventListener('click', async (e) => {
     }
 });
 
-// kick off
 initPage();

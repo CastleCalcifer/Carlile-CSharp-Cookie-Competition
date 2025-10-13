@@ -1,4 +1,7 @@
-﻿// baker-login.js
+﻿/**
+ * Handles the baker login registration and submission logic.
+ * Logins in or registers pin, then gives the baker access to the voting page using cookies.
+ */
 let selectedBakerName = null;
 
 async function loadBakers() {
