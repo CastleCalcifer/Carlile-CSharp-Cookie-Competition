@@ -157,7 +157,15 @@ class AwardsPage {
     }
 }
 
-// Auto-initialize when DOM is ready
+// Auto-initialize when DOM is ready and dependencies are loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new AwardsPage().init();
+    // Wait for dependencies to be available
+    const initAwardsPage = () => {
+        if (window.ApiClient && window.Config && window.DomUtils && window.ErrorHandler) {
+            new AwardsPage().init();
+        } else {
+            setTimeout(initAwardsPage, 100);
+        }
+    };
+    initAwardsPage();
 });

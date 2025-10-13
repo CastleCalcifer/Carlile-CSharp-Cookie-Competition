@@ -142,7 +142,15 @@ class ResultsPage {
     }
 }
 
-// Auto-initialize when DOM is ready
+// Auto-initialize when DOM is ready and dependencies are loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new ResultsPage().init();
+    // Wait for dependencies to be available
+    const initResultsPage = () => {
+        if (window.ApiClient && window.Config && window.DomUtils && window.ErrorHandler) {
+            new ResultsPage().init();
+        } else {
+            setTimeout(initResultsPage, 100);
+        }
+    };
+    initResultsPage();
 });

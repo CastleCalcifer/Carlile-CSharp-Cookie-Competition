@@ -74,7 +74,7 @@ class ErrorHandler {
             });
         }
 
-        if (showToUser && errorElement) {
+        if (showToUser && errorElement && window.DomUtils) {
             const message = this.getUserFriendlyMessage(apiError);
             DomUtils.setError(errorElement, message);
         }
@@ -107,22 +107,21 @@ class ErrorHandler {
      * @param {string} type - Alert type (error, warning, info, success)
      */
     showAlert(message, type = 'error') {
-        // Create Bootstrap alert
-        const alertDiv = DomUtils.createElement('div', {
-            className: `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`,
-            role: 'alert'
-        });
+        // Create Bootstrap alert using native DOM methods
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`;
+        alertDiv.setAttribute('role', 'alert');
 
-        const content = DomUtils.createElement('div', {}, [
-            message,
-            DomUtils.createElement('button', {
-                type: 'button',
-                className: 'btn-close',
-                'data-bs-dismiss': 'alert',
-                'aria-label': 'Close'
-            })
-        ]);
+        const content = document.createElement('div');
+        content.textContent = message;
 
+        const closeButton = document.createElement('button');
+        closeButton.type = 'button';
+        closeButton.className = 'btn-close';
+        closeButton.setAttribute('data-bs-dismiss', 'alert');
+        closeButton.setAttribute('aria-label', 'Close');
+
+        content.appendChild(closeButton);
         alertDiv.appendChild(content);
 
         // Insert at top of body

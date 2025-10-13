@@ -179,7 +179,15 @@ class VotingPage {
     }
 }
 
-// Auto-initialize when DOM is ready
+// Auto-initialize when DOM is ready and dependencies are loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new VotingPage().init();
+    // Wait for dependencies to be available
+    const initVotingPage = () => {
+        if (window.ApiClient && window.Config && window.DomUtils && window.ErrorHandler) {
+            new VotingPage().init();
+        } else {
+            setTimeout(initVotingPage, 100);
+        }
+    };
+    initVotingPage();
 });

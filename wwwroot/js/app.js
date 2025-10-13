@@ -125,10 +125,18 @@ class CookieCompetitionApp {
     }
 }
 
-// Initialize app when DOM is ready
+// Initialize app when DOM is ready and dependencies are loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.App = new CookieCompetitionApp();
-    window.App.init();
+    // Wait for dependencies to be available
+    const initApp = () => {
+        if (window.ApiClient && window.Config && window.DomUtils && window.ErrorHandler) {
+            window.App = new CookieCompetitionApp();
+            window.App.init();
+        } else {
+            setTimeout(initApp, 100);
+        }
+    };
+    initApp();
 });
 
 // Export for module systems if needed

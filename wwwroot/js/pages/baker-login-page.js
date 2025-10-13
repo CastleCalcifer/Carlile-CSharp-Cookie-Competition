@@ -194,7 +194,15 @@ class BakerLoginPage {
     }
 }
 
-// Auto-initialize when DOM is ready
+// Auto-initialize when DOM is ready and dependencies are loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new BakerLoginPage().init();
+    // Wait for dependencies to be available
+    const initBakerLoginPage = () => {
+        if (window.ApiClient && window.Config && window.DomUtils && window.ErrorHandler) {
+            new BakerLoginPage().init();
+        } else {
+            setTimeout(initBakerLoginPage, 100);
+        }
+    };
+    initBakerLoginPage();
 });
