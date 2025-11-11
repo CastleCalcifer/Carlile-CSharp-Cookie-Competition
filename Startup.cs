@@ -11,7 +11,7 @@ using Carlile_Cookie_Competition.Models; // Baker model
 
 using System;
 
-namespace CookieVotingApi
+namespace Carlile_Cookie_Competition
 {
     /// <summary>
     /// Configures services and middleware for the Cookie Voting API.

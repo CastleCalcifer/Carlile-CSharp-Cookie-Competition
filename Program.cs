@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace CookieVotingApi
+namespace Carlile_Cookie_Competition
 {
     public class Program
     {
