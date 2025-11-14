@@ -75,3 +75,4 @@ dotnet test <br>
 - The database file (`votes.db`) will be created automatically in the project directory.
 - When logging in as a baker, to log out you need to clear your cookies. This website focuses on UX since it is made for a specific purpose, so a log out system could complicate things for non techsaavy users.
 - By default Swagger is enabled for easy API testing. To get to the home page, remove the /swagger/ from the address bar.
+- Generative AI was used to help with error handling and ensuring edge cases are handled and was manually reviewed before implementing. Core logic was written by hand.

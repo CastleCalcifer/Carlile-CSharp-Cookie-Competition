@@ -18,7 +18,6 @@ namespace Carlile_Cookie_Competition.Controllers
         private readonly IDataProtector _protector;
         private readonly ILogger<BakersController> _logger;
 
-        // cookie name you will use
         private const string BakerCookieName = "baker_auth";
         // cookie lifetime in minutes
         private const int BakerCookieMinutes = 60;
