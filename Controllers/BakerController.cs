@@ -19,7 +19,6 @@ namespace Carlile_Cookie_Competition.Controllers
         private readonly ILogger<BakersController> _logger;
 
         private const string BakerCookieName = "baker_auth";
-        // cookie lifetime in minutes
         private const int BakerCookieMinutes = 60;
 
         public BakersController(AppDbContext db,

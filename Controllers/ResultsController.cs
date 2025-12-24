@@ -16,7 +16,7 @@ namespace Carlile_Cookie_Competition.Controllers
             _db = db;
         }
 
-        // GET /api/results?year=2024
+        // GET /api/results?year=2025
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] int year)
         {

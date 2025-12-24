@@ -1,6 +1,5 @@
-﻿// voting-client.js (updated)
-// Assumes there is a container with id="cookiesContainer" and a submit button id="submitVotes"
-const YEAR = 2024; // or compute dynamically
+﻿
+const YEAR = 2025; // or compute dynamically
 const cookiesContainer = document.getElementById('cookiesContainer');
 const submitBtn = document.getElementById('submitVotes');
 

@@ -67,10 +67,6 @@ class AwardsService {
             errors.push('Please select a cookie for Best Presentation');
         }
 
-        if (mostCreativeId === bestPresentationId) {
-            errors.push('Most Creative and Best Presentation must be different cookies');
-        }
-
         if (voterId !== null && typeof voterId !== 'string') {
             errors.push('Voter ID must be a string');
         }

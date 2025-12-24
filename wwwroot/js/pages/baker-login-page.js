@@ -156,9 +156,9 @@ class BakerLoginPage {
             this._hideModal();
             this._showSuccess('Login successful!');
             
-            // Redirect to baker area
+            // Redirect to voting
             setTimeout(() => {
-                window.location.href = '/baker/area';
+                window.location.href = '/voting.html';
             }, 1000);
 
         } catch (error) {

@@ -54,7 +54,7 @@ async function submitPin(modal) {
 
         // success: payload.message may indicate created or login
         modal.hide();
-        window.location.href = `/baker/area`;
+        window.location.href = `/voting.html`;
     } catch (err) {
         document.getElementById('pinError').textContent = 'Network error';
     }

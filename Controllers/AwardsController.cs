@@ -35,7 +35,7 @@ namespace Carlile_Cookie_Competition.Controllers
                 .Where(c => ids.Contains(c.Id) && c.Year == req.Year)
                 .ToListAsync();
 
-            if (cookies.Count != 2)
+            if (cookies.Count == 0)
                 return BadRequest(new { success = false, message = "One or both cookie IDs are invalid for the selected year." });
 
             // Prevent duplicate award voting by voter id (if VoterId is provided)

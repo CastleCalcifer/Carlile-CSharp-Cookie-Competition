@@ -4,7 +4,7 @@
  */
 class Config {
     constructor() {
-        this.year = 2024;
+        this.year = 2025;
         this.apiEndpoints = {
             cookies: '/api/cookies',
             bakers: '/api/bakers',

@@ -3,7 +3,7 @@
  * Fetches eligible cookies, populates dropdowns, and submits votes.
  */
 
-const YEAR = 2024;
+const YEAR = 2025;
 
 // DOM elements for award selection and feedback
 const creativeSelect = document.getElementById('mostCreative');

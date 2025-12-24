@@ -12,7 +12,7 @@ public class CookiesController : ControllerBase
     private readonly AppDbContext _db;
     public CookiesController(AppDbContext db) => _db = db;
 
-    // GET /api/cookies?year=2024
+    // GET /api/cookies?year=2025
     // in CookiesController.cs GET action
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] int year, [FromQuery] int? excludeBakerId = null)
