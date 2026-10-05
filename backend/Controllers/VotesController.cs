@@ -7,9 +7,7 @@ using Carlile_Cookie_Competition.Dtos;
 
 namespace Carlile_Cookie_Competition.Controllers
 {
-    /// <summary>
-    /// API controller for submitting cookie ranking votes.
-    /// </summary>
+
     [ApiController]
     [Route("api/[controller]")]
     public class VoterController : ControllerBase
@@ -22,17 +20,11 @@ namespace Carlile_Cookie_Competition.Controllers
             _db = db;
         }
 
-        /// <summary>
         /// Returns the points for a given rank index.
-        /// </summary>
         private static int PointsForRank(int rankIndex) =>
             rankIndex < PointsByRank.Length ? PointsByRank[rankIndex] : 0;
 
-        /// <summary>
-        /// Submits a ranked vote for cookies.
-        /// </summary>
-        /// <param name="req">Vote submission request.</param>
-        /// <returns>Result of the submission.</returns>
+
         [HttpPost("vote")]
         public async Task<IActionResult> SubmitVote([FromBody] SubmitVotesRequest req)
         {
@@ -69,7 +61,6 @@ namespace Carlile_Cookie_Competition.Controllers
                         Points = pts,
                     });
 
-                    // Atomically increment cookie score in the database
                     await _db.Database.ExecuteSqlInterpolatedAsync(
                         $"UPDATE Cookie SET score = COALESCE(score, 0) + {pts} WHERE id = {cid}");
                 }

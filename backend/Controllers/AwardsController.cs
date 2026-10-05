@@ -51,7 +51,7 @@ namespace Carlile_Cookie_Competition.Controllers
             using var tx = await _db.Database.BeginTransactionAsync();
             try
             {
-                // Increment creative and presentation points atomically
+                // Increment creative and presentation points
                 await _db.Database.ExecuteSqlInterpolatedAsync(
                     $"UPDATE Cookie SET creative_points = COALESCE(creative_points, 0) + 1 WHERE id = {req.MostCreativeId}");
                 await _db.Database.ExecuteSqlInterpolatedAsync(

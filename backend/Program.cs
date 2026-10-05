@@ -10,12 +10,10 @@ namespace Carlile_Cookie_Competition
             CreateHostBuilder(args).Build().Run();
         }
 
-        // Builds and configures the host (Kestrel web server, config, DI, etc.)
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    // Startup contains all service registrations & middleware pipeline
                     webBuilder.UseStartup<Startup>();
                 });
     }
