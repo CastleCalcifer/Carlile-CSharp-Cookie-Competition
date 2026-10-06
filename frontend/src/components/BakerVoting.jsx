@@ -1,16 +1,15 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useBakers } from '../hooks/useBakers'
-import { useCookies } from '../hooks/useCookies'
+import { useCurrentBaker } from '../hooks/useCurrentBaker'
 import Voting from './Voting'
 
 function BakerVoting() {
     const { bakerId } = useParams()
     const { bakers, loading: bakersLoading, error: bakersError } = useBakers()
-    const { cookies, loading: cookiesLoading, error: cookiesError } = useCookies()
-
-    if (bakersLoading || cookiesLoading) return <p>Loading...</p>
+    const { baker: currentBaker, loading: sessionLoading, error: sessionError } = useCurrentBaker()
+    if (bakersLoading || sessionLoading) return <p>Loading...</p>
     if (bakersError) return <p>Error: {bakersError}</p>
-    if (cookiesError) return <p>Error: {cookiesError}</p>
+    if (sessionError) return <p>Error: {sessionError}</p>
 
     const baker = bakers.find(b => String(b.id) === bakerId)
 
@@ -18,9 +17,11 @@ function BakerVoting() {
         return <p>Baker not found.</p>
     }
 
-    const ownCookie = cookies.find(c => c.baker?.id === baker.id)
+    if (!currentBaker || String(currentBaker.id) !== bakerId) {
+        return <p>Please <Link to="/bakers">sign in as {baker.bakerName}</Link> before voting.</p>
+    }
 
-    return <Voting excludeCookieId={ownCookie?.id} nextPath={`/bakers/${bakerId}/awards`} />
+    return <Voting excludeBakerId={baker.id} nextPath={`/bakers/${bakerId}/awards`} />
 }
 
 export default BakerVoting

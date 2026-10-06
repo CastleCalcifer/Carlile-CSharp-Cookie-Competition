@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { getBakers } from '../api'
 
 export function useBakers() {
     const [bakers, setBakers] = useState([])
@@ -6,11 +7,7 @@ export function useBakers() {
     const [error, setError] = useState('')
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/bakers')
-            .then(res => {
-                if (!res.ok) throw new Error('Failed to load bakers')
-                return res.json()
-            })
+        getBakers()
             .then(data => setBakers(data))
             .catch(err => setError(err.message))
             .finally(() => setLoading(false))

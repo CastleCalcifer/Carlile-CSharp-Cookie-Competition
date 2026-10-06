@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from '../hooks/useCookies'
+import { useCurrentBaker } from '../hooks/useCurrentBaker'
+import { submitAwards } from '../api'
 
 const placeholderImage = 'https://www.jocooks.com/wp-content/uploads/2021/12/sugar-cookies-1-17.jpg'
 
@@ -9,13 +11,10 @@ const awards = [
     { id: 'best_presentation', label: 'Best Presentation' },
 ]
 
-function Awards({ excludeCookieId }) {
+function Awards({ excludeBakerId }) {
     const navigate = useNavigate()
-    const { cookies: allCookies, loading, error: loadError } = useCookies()
-
-    const cookies = excludeCookieId
-        ? allCookies.filter(cookie => cookie.id !== excludeCookieId)
-        : allCookies
+    const { baker: currentBaker, loading: sessionLoading, error: sessionError } = useCurrentBaker()
+    const { cookies, loading, error: loadError } = useCookies({ excludeBakerId: excludeBakerId ?? currentBaker?.id })
 
     const [selections, setSelections] = useState({
         most_creative: '',
@@ -43,24 +42,18 @@ function Awards({ excludeCookieId }) {
         }
         setError('')
 
-        const payload = Object.fromEntries(
-            Object.entries(selections).map(([awardId, cookieId]) => [awardId, Number(cookieId)])
-        )
-
-        fetch('http://localhost:8080/api/awards', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
+        submitAwards({
+            mostCreativeId: Number(selections.most_creative),
+            bestPresentationId: Number(selections.best_presentation),
         })
-            .then(res => {
-                if (!res.ok) return res.text().then(msg => { throw new Error(msg) })
-                navigate('/results')
-            })
+            .then(() => navigate('/results'))
             .catch(err => setError(err.message))
     }
 
-    if (loading) return <p>Loading cookies...</p>
+    if (sessionLoading || loading) return <p>Loading cookies...</p>
+    if (sessionError) return <p>Error: {sessionError}</p>
     if (loadError) return <p>Error: {loadError}</p>
+    if (cookies.length === 0) return <p>No cookies are available for awards.</p>
 
     return (
         <div className="row">

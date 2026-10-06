@@ -1,19 +1,16 @@
 import { useResults } from '../hooks/useResults'
-import { useAwardResults } from '../hooks/useAwardResults'
 
 function Results() {
-    const { results, loading: resultsLoading, error: resultsError } = useResults()
-    const { awardResults, loading: awardsLoading, error: awardsError } = useAwardResults()
+    const { results, loading, error } = useResults()
 
-    if (resultsLoading || awardsLoading) return <p>Loading results...</p>
-    if (resultsError) return <p>Error: {resultsError}</p>
+    if (loading) return <p>Loading results...</p>
+    if (error) return <p>Error: {error}</p>
 
-    const ranked = [...results].reverse()
-
-    const awardLabels = {
-        most_creative: 'Most Creative',
-        best_presentation: 'Best Presentation',
-    }
+    const ranked = results.ranked || []
+    const awards = [
+        { label: 'Most Creative', winner: results.awards?.creative, points: 'creativePoints' },
+        { label: 'Best Presentation', winner: results.awards?.presentation, points: 'presentationPoints' },
+    ]
 
     return (
         <>
@@ -21,31 +18,30 @@ function Results() {
             <div className="row">
                 {ranked.map((result, index) => (
                     <div
-                        key={result.cookie.id}
+                        key={result.id}
                         className="d-flex flex-column justify-content-center align-items-center cookieOption"
                     >
                         <div className="p-2">
-                            <h2>{placeLabel(index, ranked.length)}</h2>
-                            <h2>{result.cookie.cookieName}</h2>
-                            <img src={result.cookie.image} className="cookieImage" alt={result.cookie.cookieName} />
-                            <h2>Total Score: {result.totalScore}</h2>
+                            <h2>{placeLabel(index)}</h2>
+                            <h2>{result.cookieName}</h2>
+                            <img src={result.imageUrl} className="cookieImage" alt={result.cookieName} />
+                            <h2>Total Score: {result.score}</h2>
                         </div>
                     </div>
                 ))}
             </div>
 
             <h2>Awards</h2>
-            {awardsError && <p>{awardsError}</p>}
-            {!awardsError && awardResults.map(award => (
+            {awards.map(({ label, winner, points }) => winner && (
                 <div
-                    key={award.awardType}
+                    key={label}
                     className="d-flex flex-column justify-content-center align-items-center cookieOption"
                 >
                     <div className="p-2">
-                        <h2>{awardLabels[award.awardType] || award.awardType}</h2>
-                        <h2>{award.cookie.cookieName}</h2>
-                        <img src={award.cookie.image} className="cookieImage" alt={award.cookie.cookieName} />
-                        <h2>Votes: {award.voteCount}</h2>
+                        <h2>{label}</h2>
+                        <h2>{winner.cookieName}</h2>
+                        <img src={winner.imageUrl} className="cookieImage" alt={winner.cookieName} />
+                        <h2>Points: {winner[points]}</h2>
                     </div>
                 </div>
             ))}
@@ -53,10 +49,10 @@ function Results() {
     )
 }
 
-function placeLabel(index, total) {
-    const placeFromLast = total - index
-    const suffix = { 1: 'st', 2: 'nd', 3: 'rd' }[placeFromLast] || 'th'
-    return `${placeFromLast}${suffix} Place`
+function placeLabel(index) {
+    const place = index + 1
+    const suffix = { 1: 'st', 2: 'nd', 3: 'rd' }[place] || 'th'
+    return `${place}${suffix} Place`
 }
 
 export default Results

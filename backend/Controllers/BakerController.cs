@@ -97,6 +97,17 @@ namespace Carlile_Cookie_Competition.Controllers
             return Ok(new { success = true, data = new { id = baker.Id, bakerName = baker.BakerName, cookieId = baker.CookieId } });
         }
 
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete(BakerCookieName, new CookieOptions
+            {
+                Secure = Request.IsHttps,
+                SameSite = SameSiteMode.Lax
+            });
+            return Ok(new { success = true, message = "Logged out." });
+        }
+
         private int? ValidateAndGetBakerIdFromCookie()
         {
             if (!Request.Cookies.TryGetValue(BakerCookieName, out var protectedValue)) return null;

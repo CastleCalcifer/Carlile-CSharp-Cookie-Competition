@@ -1,16 +1,16 @@
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useBakers } from '../hooks/useBakers'
-import { useCookies } from '../hooks/useCookies'
+import { useCurrentBaker } from '../hooks/useCurrentBaker'
 import Awards from './Awards'
 
 function BakerAwards() {
     const { bakerId } = useParams()
-    const { bakers, loading: bakersLoading, error: bakersError } = useBakers()
-    const { cookies, loading: cookiesLoading, error: cookiesError } = useCookies()
+    const { bakers, loading, error } = useBakers()
+    const { baker: currentBaker, loading: sessionLoading, error: sessionError } = useCurrentBaker()
 
-    if (bakersLoading || cookiesLoading) return <p>Loading...</p>
-    if (bakersError) return <p>Error: {bakersError}</p>
-    if (cookiesError) return <p>Error: {cookiesError}</p>
+    if (loading || sessionLoading) return <p>Loading...</p>
+    if (error) return <p>Error: {error}</p>
+    if (sessionError) return <p>Error: {sessionError}</p>
 
     const baker = bakers.find(b => String(b.id) === bakerId)
 
@@ -18,9 +18,11 @@ function BakerAwards() {
         return <p>Baker not found.</p>
     }
 
-    const ownCookie = cookies.find(c => c.baker?.id === baker.id)
+    if (!currentBaker || String(currentBaker.id) !== bakerId) {
+        return <p>Please <Link to="/bakers">sign in as {baker.bakerName}</Link> before submitting awards.</p>
+    }
 
-    return <Awards excludeCookieId={ownCookie?.id} />
+    return <Awards excludeBakerId={baker.id} />
 }
 
 export default BakerAwards

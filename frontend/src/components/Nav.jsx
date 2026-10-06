@@ -24,6 +24,9 @@ function Nav() {
                             <Link className="nav-link" to="/voting">Voting</Link>
                         </li>
                         <li className="nav-item">
+                            <Link className="nav-link" to="/bakers">Baker sign-in</Link>
+                        </li>
+                        <li className="nav-item">
                             <Link className="nav-link" to="/results">Results</Link>
                         </li>
                         <li className="nav-item">

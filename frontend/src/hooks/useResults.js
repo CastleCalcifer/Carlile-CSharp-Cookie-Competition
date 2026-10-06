@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react'
+import { getResults } from '../api'
 
 export function useResults() {
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState({ ranked: [], awards: {} })
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/results')
-            .then(res => {
-                if (!res.ok) throw new Error('Failed to load results')
-                return res.json()
-            })
+        getResults()
             .then(data => setResults(data))
             .catch(err => setError(err.message))
             .finally(() => setLoading(false))
